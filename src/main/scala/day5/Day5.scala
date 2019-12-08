@@ -4,15 +4,6 @@ import scala.annotation.tailrec
 import scala.io.Source
 
 object Day5 {
-
-  object Op { def apply(code: Int): Op = new Op(code, code % 100) }
-  case class Op(code: Int, opType: Int) {
-    val (p1m, p2m, p3m) = (code % 1000 / 100, code % 10000 / 1000, code / 10000)
-    def p1(implicit intCode: Array[Int], pointer: Int): Int = if (p1m == 1) pointer + 1 else intCode(pointer + 1)
-    def p2(implicit intCode: Array[Int], pointer: Int): Int = if (p2m == 1) pointer + 2 else intCode(pointer + 2)
-    def p3(implicit intCode: Array[Int], pointer: Int): Int = if (p3m == 1) pointer + 3 else intCode(pointer + 3)
-  }
-
   @tailrec
   def compute(implicit intCode: Array[Int], input: List[Int], output: List[Int] = Nil, pointer: Int = 0): List[Int] =
     Op(intCode(pointer)) match {
@@ -49,6 +40,14 @@ object Day5 {
 
       case _ => output
     }
+
+  object Op { def apply(code: Int): Op = new Op(code, code % 100) }
+  case class Op(code: Int, opType: Int) {
+    val (p1m, p2m, p3m) = (code % 1000 / 100, code % 10000 / 1000, code / 10000)
+    def p1(implicit intCode: Array[Int], pointer: Int): Int = if (p1m == 1) pointer + 1 else intCode(pointer + 1)
+    def p2(implicit intCode: Array[Int], pointer: Int): Int = if (p2m == 1) pointer + 2 else intCode(pointer + 2)
+    def p3(implicit intCode: Array[Int], pointer: Int): Int = if (p3m == 1) pointer + 3 else intCode(pointer + 3)
+  }
 
   def main(args: Array[String]): Unit = {
     val source = Source.fromResource("day5.txt")
