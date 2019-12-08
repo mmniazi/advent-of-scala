@@ -5,38 +5,38 @@ import scala.io.Source
 
 object Day5 {
   @tailrec
-  def compute(implicit intCode: Array[Int], input: List[Int], output: List[Int] = Nil, pointer: Int = 0): List[Int] =
+  def compute(input: List[Int], output: List[Int] = Nil)(implicit intCode: Array[Int], pointer: Int = 0): List[Int] =
     Op(intCode(pointer)) match {
       case op@Op(_, 1) =>
         op.p3 = op.p1 + op.p2
-        compute(intCode, input, output, pointer + 4)
+        compute(input, output)(intCode, pointer + 4)
 
       case op@Op(_, 2) =>
         op.p3 = op.p1 * op.p2
-        compute(intCode, input, output, pointer + 4)
+        compute(input, output)(intCode, pointer + 4)
 
       case op@Op(_, 3) =>
         op.p1 = input.head
-        compute(intCode, input.tail, output, pointer + 2)
+        compute(input.tail, output)(intCode, pointer + 2)
 
       case op@Op(_, 4) =>
-        compute(intCode, input, output :+ op.p1, pointer + 2)
+        compute(input, output :+ op.p1)(intCode, pointer + 2)
 
       case op@Op(_, 5) =>
-        if (op.p1 != 0) compute(intCode, input, output, op.p2)
-        else compute(intCode, input, output, pointer + 3)
+        if (op.p1 != 0) compute(input, output)(intCode, op.p2)
+        else compute(input, output)(intCode, pointer + 3)
 
       case op@Op(_, 6) =>
-        if (op.p1 == 0) compute(intCode, input, output, op.p2)
-        else compute(intCode, input, output, pointer + 3)
+        if (op.p1 == 0) compute(input, output)(intCode, op.p2)
+        else compute(input, output)(intCode, pointer + 3)
 
       case op@Op(_, 7) =>
         op.p3 = if (op.p1 < op.p2) 1 else 0
-        compute(intCode, input, output, pointer + 4)
+        compute(input, output)(intCode, pointer + 4)
 
       case op@Op(_, 8) =>
         op.p3 = if (op.p1 == op.p2) 1 else 0
-        compute(intCode, input, output, pointer + 4)
+        compute(input, output)(intCode, pointer + 4)
 
       case _ => output
     }
@@ -57,9 +57,9 @@ object Day5 {
   def main(args: Array[String]): Unit = {
     val source = Source.fromResource("day5.txt")
     val intCode: Array[Int] = source.getLines().toList.head.split(',').map(_.toInt)
-    val firstPartOutput = compute(intCode.clone(), input = 1 :: Nil)
+    val firstPartOutput = compute(input = 1 :: Nil)(intCode.clone())
     println(s"part1 diagnostic code: ${firstPartOutput.last}")
-    val secondPartOutput = compute(intCode.clone(), input = 5 :: Nil)
+    val secondPartOutput = compute(input = 5 :: Nil)(intCode.clone())
     println(s"part2 diagnostic code: ${secondPartOutput.last}")
   }
 }
