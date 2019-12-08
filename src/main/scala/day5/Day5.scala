@@ -17,7 +17,8 @@ object Day5 {
   }
 
   @tailrec
-  def compute(implicit intCode: Array[Int], input: List[Int], output: List[Int] = Nil, pointer: Int = 0): List[Int] = Op(intCode(pointer)) match {
+  def compute(implicit intCode: Array[Int], input: List[Int], output: List[Int] = Nil, pointer: Int = 0): List[Int] =
+    Op(intCode(pointer)) match {
       case op@Op(_, 1) =>
         intCode(op.p3) = intCode(op.p1) + intCode(op.p2)
         compute(intCode, input, output, pointer + 4)
