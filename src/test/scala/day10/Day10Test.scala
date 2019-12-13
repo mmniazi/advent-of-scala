@@ -22,4 +22,34 @@ class Day10Test extends AnyFunSuite {
     val result = asteroidWithMaxVisibility(asteroids)
     assert(result == ((5,8), 33))
   }
+
+  test("test coordinatesForNthToVaporize") {
+    val lines =
+      """.#..##.###...#######
+        |##.############..##.
+        |.#.######.########.#
+        |.###.#######.####.#.
+        |#####.##.#.##.###.##
+        |..#####..#.#########
+        |####################
+        |#.####....###.#.#.##
+        |##.#################
+        |#####.##.###..####..
+        |..######..##.#######
+        |####.##.####...##..#
+        |.#####..#.######.###
+        |##...#.##########...
+        |#.##########.#######
+        |.####.#.###.###.#.##
+        |....##.##.###..#####
+        |.#.#.###########.###
+        |#.#.#.#####.####.###
+        |###.##.####.##.#..##""".stripMargin.split('\n').toList
+
+    val asteroids = takeAsteroids(lines)
+    val (station, _) = asteroidWithMaxVisibility(asteroids)
+    val result = coordinatesForNthToVaporize(asteroids, station, 200)
+
+    assert(result == (8, 2))
+  }
 }
