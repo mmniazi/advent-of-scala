@@ -44,7 +44,7 @@ object Day7 {
     val source = Source.fromResource("day7.txt")
     val intCode: Array[Int] = source.getLines().toList.head.split(',').map(_.toInt)
 
-    val possiblePhaseSequences: List[List[Int]] = (0 to 4).toList.permutations.toList
+    val possiblePhaseSequences = (0 to 4).toList.permutations.toList
     val possibleOutputs = possiblePhaseSequences.par.map(computeForPhaseSeq(_, intCode.clone()))
     println(s"highest output signal: ${possibleOutputs.max}")
 
