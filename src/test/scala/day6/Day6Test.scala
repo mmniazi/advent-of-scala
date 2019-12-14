@@ -7,15 +7,15 @@ class Day6Test extends AnyFunSuite {
 
   test("test createTree") {
     val nodes = List(("COM", "B"), ("B", "C"), ("C", "D"), ("B", "G"), ("G", "H"))
-    val result = createTree(nodes).toString
+    val (tree, _) = createTree(nodes)
     val expected = "COM(B(C(D()),G(H())))"
-    assert(result == expected)
+    assert(tree.toString == expected)
   }
 
   test("test calculateOrbits") {
     val nodes = List(("COM", "B"), ("B", "C"), ("C", "D"), ("D", "E"), ("E", "F"), ("B", "G"),
       ("G", "H"), ("D", "I"), ("E", "J"), ("J", "K"), ("K", "L"))
-    val (tree, map) = createTree(nodes)
+    val (tree, _) = createTree(nodes)
     assert(calculateOrbits(tree) == 42)
   }
 

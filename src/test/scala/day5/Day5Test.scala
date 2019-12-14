@@ -11,7 +11,7 @@ class Day5Test extends AnyFunSuite {
     val source = Source.fromResource("day5.txt")
     val intCode: Array[Int] = source.getLines().toList.head.split(',').map(_.toInt)
 
-    val output = compute(input = 1 :: Nil)(intCode)
+    val output = compute(input = BigInt(1) :: Nil)(State(intCode.map(BigInt(_))))
     assert(output.reverse.tail.forall(_ == 0))
   }
 
@@ -20,8 +20,8 @@ class Day5Test extends AnyFunSuite {
       1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,
       999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99)
 
-    assert(compute(7 :: Nil)(intCode).head == 999)
-    assert(compute(8 :: Nil)(intCode).head == 1000)
-    assert(compute(9 :: Nil)(intCode).head == 1001)
+    assert(compute(BigInt(7) :: Nil)(State(intCode.map(BigInt(_)))).head == 999)
+    assert(compute(BigInt(8) :: Nil)(State(intCode.map(BigInt(_)))).head == 1000)
+    assert(compute(BigInt(9) :: Nil)(State(intCode.map(BigInt(_)))).head == 1001)
   }
 }
