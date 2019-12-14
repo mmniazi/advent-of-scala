@@ -1,11 +1,16 @@
 package day5
 
+import java.util.concurrent.{LinkedBlockingQueue, TimeUnit}
+
 import scala.annotation.tailrec
 import scala.io.Source
-
+import scala.jdk.CollectionConverters._
 object Day5 {
+
+  implicit def listToQueue(l: List[Int]): LinkedBlockingQueue[Int] = new LinkedBlockingQueue[Int](l.asJava)
+
   @tailrec
-  def compute(input: List[Int], output: List[Int] = Nil)(implicit intCode: Array[Int], pointer: Int = 0): List[Int] =
+  def compute(input: LinkedBlockingQueue[Int], output: LinkedBlockingQueue[Int] = new LinkedBlockingQueue())(implicit intCode: Array[Int], pointer: Int = 0): List[Int] =
     Op(intCode(pointer)) match {
       case op@Op(_, 1) =>
         op.p3 = op.p1 + op.p2
@@ -16,11 +21,12 @@ object Day5 {
         compute(input, output)(intCode, pointer + 4)
 
       case op@Op(_, 3) =>
-        op.p1 = input.head
-        compute(input.tail, output)(intCode, pointer + 2)
+        op.p1 = input.poll(1, TimeUnit.DAYS)
+        compute(input, output)(intCode, pointer + 2)
 
       case op@Op(_, 4) =>
-        compute(input, output :+ op.p1)(intCode, pointer + 2)
+        output.add(op.p1)
+        compute(input, output)(intCode, pointer + 2)
 
       case op@Op(_, 5) =>
         if (op.p1 != 0) compute(input, output)(intCode, op.p2)
@@ -38,7 +44,7 @@ object Day5 {
         op.p3 = if (op.p1 == op.p2) 1 else 0
         compute(input, output)(intCode, pointer + 4)
 
-      case _ => output
+      case _ => output.asScala.toList
     }
 
   object Op {
