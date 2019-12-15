@@ -15,10 +15,4 @@ class Day12Test extends AnyFunSuite {
     val (updatedMoons, _) = simulate(moons, (_, steps) => steps == 10)
     assert(totalEnergy(updatedMoons) == 179)
   }
-
-  test("test universe repeating") {
-    val moons = Array(Moon(-8, -10, 0), Moon(5, 5, 10), Moon(2, -7, 3), Moon(9, -8, -3))
-    val (_, steps) = simulate(moons, (m, s) => m.toSet == moons.toSet && s != 0)
-    assert(steps == BigInt("4686774924"))
-  }
 }

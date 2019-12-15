@@ -11,16 +11,16 @@ object Day12 {
   def simulate(moons: Array[Moon], stopCondition: (Array[Moon], BigInt) => Boolean, steps: BigInt = 0): (Array[Moon], BigInt) = {
     if (stopCondition(moons, steps)) (moons, steps)
     else {
-      val moonPairs = moons.combinations(2).flatMap(_.permutations).map(m => (m(0), m(1))).toList.groupBy(_._1).par
-      val updatedMoons = moonPairs.map { case (moon, gravityPair) =>
-        val velocityDelta = gravityPair.map { case (moon1, moon2) =>
-          Seq(moon2.x.compare(moon1.x), moon2.y.compare(moon1.y), moon2.z.compare(moon1.z))
+      val moonPairs = moons.map(m => (m, moons.filterNot(_ == m)))
+      val updatedMoons = moonPairs.map { case (moon, otherMoons) =>
+        val velocityDelta = otherMoons.map { otherMoon =>
+          Array(otherMoon.x.compare(moon.x), otherMoon.y.compare(moon.y), otherMoon.z.compare(moon.z))
         }.transpose.map(_.sum)
         val vX = moon.vX + velocityDelta.head
         val vY = moon.vY + velocityDelta(1)
         val vZ = moon.vZ + velocityDelta(2)
         Moon(moon.x + vX, moon.y + vY, moon.z + vZ, vX, vY, vZ)
-      }.toArray
+      }
 
       simulate(updatedMoons, stopCondition, steps + 1)
     }
