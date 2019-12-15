@@ -1,99 +1,157 @@
---- Day 6: Universal Orbit Map ---
+--- Day 10: Monitoring Station ---
 
-You've landed at the Universal Orbit Map facility on Mercury. Because navigation in space often involves transferring between orbits, the orbit maps here are useful for finding efficient routes between, for example, you and Santa. You download a map of the local orbits (your puzzle input).
+You fly into the asteroid belt and reach the Ceres monitoring station. The Elves here have an emergency: they're having trouble tracking all of the asteroids and can't be sure they're safe.
 
-Except for the universal Center of Mass (COM), every object in space is in orbit around exactly one other object. An orbit looks roughly like this:
+The Elves would like to build a new monitoring station in a nearby area of space; they hand you a map of all of the asteroids in that region (your puzzle input).
 
-                  \
-                   \
-                    |
-                    |
-AAA--> o            o <--BBB
-                    |
-                    |
-                   /
-                  /
-In this diagram, the object BBB is in orbit around AAA. The path that BBB takes around AAA (drawn with lines) is only partly shown. In the map data, this orbital relationship is written AAA)BBB, which means "BBB is in orbit around AAA".
+The map indicates whether each position is empty (.) or contains an asteroid (#). The asteroids are much smaller than they appear on the map, and every asteroid is exactly in the center of its marked position. The asteroids can be described with X,Y coordinates where X is the distance from the left edge and Y is the distance from the top edge (so the top-left corner is 0,0 and the position immediately to its right is 1,0).
 
-Before you use your map data to plot a course, you need to make sure it wasn't corrupted during the download. To verify maps, the Universal Orbit Map facility uses orbit count checksums - the total number of direct orbits (like the one shown above) and indirect orbits.
+Your job is to figure out which asteroid would be the best place to build a new monitoring station. A monitoring station can detect any asteroid to which it has direct line of sight - that is, there cannot be another asteroid exactly between them. This line of sight can be at any angle, not just lines aligned to the grid or diagonally. The best location is the asteroid that can detect the largest number of other asteroids.
 
-Whenever A orbits B and B orbits C, then A indirectly orbits C. This chain can be any number of objects long: if A orbits B, B orbits C, and C orbits D, then A indirectly orbits D.
+For example, consider the following map:
 
-For example, suppose you have the following map:
+.#..#
+.....
+#####
+....#
+...##
+The best location for a new monitoring station on this map is the highlighted asteroid at 3,4 because it can detect 8 asteroids, more than any other location. (The only asteroid it cannot detect is the one at 1,0; its view of this asteroid is blocked by the asteroid at 2,2.) All other asteroids are worse locations; they can detect 7 or fewer other asteroids. Here is the number of other asteroids a monitoring station on each asteroid could detect:
 
-COM)B
-B)C
-C)D
-D)E
-E)F
-B)G
-G)H
-D)I
-E)J
-J)K
-K)L
-Visually, the above map of orbits looks like this:
+.7..7
+.....
+67775
+....7
+...87
+Here is an asteroid (#) and some examples of the ways its line of sight might be blocked. If there were another asteroid at the location of a capital letter, the locations marked with the corresponding lowercase letter would be blocked and could not be detected:
 
-        G - H       J - K - L
-       /           /
-COM - B - C - D - E - F
-               \
-                I
-In this visual representation, when two objects are connected by a line, the one on the right directly orbits the one on the left.
+#.........
+...A......
+...B..a...
+.EDCG....a
+..F.c.b...
+.....c....
+..efd.c.gb
+.......c..
+....f...c.
+...e..d..c
+Here are some larger examples:
 
-Here, we can count the total number of orbits as follows:
+Best is 5,8 with 33 other asteroids detected:
 
-D directly orbits C and indirectly orbits B and COM, a total of 3 orbits.
-L directly orbits K and indirectly orbits J, E, D, C, B, and COM, a total of 7 orbits.
-COM orbits nothing.
-The total number of direct and indirect orbits in this example is 42.
+......#.#.
+#..#.#....
+..#######.
+.#.#.###..
+.#..#.....
+..#....#.#
+#..#....#.
+.##.#..###
+##...#..#.
+.#....####
+Best is 1,2 with 35 other asteroids detected:
 
-What is the total number of direct and indirect orbits in your map data?
+#.#...#.#.
+.###....#.
+.#....#...
+##.#.#.#.#
+....#.#.#.
+.##..###.#
+..#...##..
+..##....##
+......#...
+.####.###.
+Best is 6,3 with 41 other asteroids detected:
+
+.#..#..###
+####.###.#
+....###.#.
+..###.##.#
+##.##.#.#.
+....###..#
+..#.#..#.#
+#..#.#.###
+.##...##.#
+.....#.#..
+Best is 11,13 with 210 other asteroids detected:
+
+.#..##.###...#######
+##.############..##.
+.#.######.########.#
+.###.#######.####.#.
+#####.##.#.##.###.##
+..#####..#.#########
+####################
+#.####....###.#.#.##
+##.#################
+#####.##.###..####..
+..######..##.#######
+####.##.####...##..#
+.#####..#.######.###
+##...#.##########...
+#.##########.#######
+.####.#.###.###.#.##
+....##.##.###..#####
+.#.#.###########.###
+#.#.#.#####.####.###
+###.##.####.##.#..##
+Find the best location for a new monitoring station. How many other asteroids can be detected from that location?
 
 --- Part Two ---
 
-Now, you just need to figure out how many orbital transfers you (YOU) need to take to get to Santa (SAN).
+Once you give them the coordinates, the Elves quickly deploy an Instant Monitoring Station to the location and discover the worst: there are simply too many asteroids.
 
-You start at the object YOU are orbiting; your destination is the object SAN is orbiting. An orbital transfer lets you move from any object to an object orbiting or orbited by that object.
+The only solution is complete vaporization by giant laser.
 
-For example, suppose you have the following map:
+Fortunately, in addition to an asteroid scanner, the new monitoring station also comes equipped with a giant rotating laser perfect for vaporizing asteroids. The laser starts by pointing up and always rotates clockwise, vaporizing any asteroid it hits.
 
-COM)B
-B)C
-C)D
-D)E
-E)F
-B)G
-G)H
-D)I
-E)J
-J)K
-K)L
-K)YOU
-I)SAN
-Visually, the above map of orbits looks like this:
+If multiple asteroids are exactly in line with the station, the laser only has enough power to vaporize one of them before continuing its rotation. In other words, the same asteroids that can be detected can be vaporized, but if vaporizing one asteroid makes another one detectable, the newly-detected asteroid won't be vaporized until the laser has returned to the same position by rotating a full 360 degrees.
 
-                          YOU
-                         /
-        G - H       J - K - L
-       /           /
-COM - B - C - D - E - F
-               \
-                I - SAN
-In this example, YOU are in orbit around K, and SAN is in orbit around I. To move from K to I, a minimum of 4 orbital transfers are required:
+For example, consider the following map, where the asteroid with the new monitoring station (and laser) is marked X:
 
-K to J
-J to E
-E to D
-D to I
-Afterward, the map of orbits looks like this:
+.#....#####...#..
+##...##.#####..##
+##...#...#.#####.
+..#.....X...###..
+..#.#.....#....##
+The first nine asteroids to get vaporized, in order, would be:
 
-        G - H       J - K - L
-       /           /
-COM - B - C - D - E - F
-               \
-                I - SAN
-                 \
-                  YOU
-What is the minimum number of orbital transfers required to move from the object YOU are orbiting to the object SAN is orbiting? (Between the objects they are orbiting - not between YOU and SAN.)
+.#....###24...#..
+##...##.13#67..9#
+##...#...5.8####.
+..#.....X...###..
+..#.#.....#....##
+Note that some asteroids (the ones behind the asteroids marked 1, 5, and 7) won't have a chance to be vaporized until the next full rotation. The laser continues rotating; the next nine to be vaporized are:
 
+.#....###.....#..
+##...##...#.....#
+##...#......1234.
+..#.....X...5##..
+..#.9.....8....76
+The next nine to be vaporized are then:
+
+.8....###.....#..
+56...9#...#.....#
+34...7...........
+..2.....X....##..
+..1..............
+Finally, the laser completes its first full rotation (1 through 3), a second rotation (4 through 8), and vaporizes the last asteroid (9) partway through its third rotation:
+
+......234.....6..
+......1...5.....7
+.................
+........X....89..
+.................
+In the large example above (the one with the best monitoring station location at 11,13):
+
+The 1st asteroid to be vaporized is at 11,12.
+The 2nd asteroid to be vaporized is at 12,1.
+The 3rd asteroid to be vaporized is at 12,2.
+The 10th asteroid to be vaporized is at 12,8.
+The 20th asteroid to be vaporized is at 16,0.
+The 50th asteroid to be vaporized is at 16,9.
+The 100th asteroid to be vaporized is at 10,16.
+The 199th asteroid to be vaporized is at 9,6.
+The 200th asteroid to be vaporized is at 8,2.
+The 201st asteroid to be vaporized is at 10,9.
+The 299th and final asteroid to be vaporized is at 11,1.
+The Elves are placing bets on which will be the 200th asteroid to be vaporized. Win the bet by determining which asteroid that will be; what do you get if you multiply its X coordinate by 100 and then add its Y coordinate? (For example, 8,2 becomes 802.)

@@ -6,6 +6,7 @@ import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.io.Source
 import scala.jdk.CollectionConverters._
+import scala.language.implicitConversions
 
 object Day5 {
 

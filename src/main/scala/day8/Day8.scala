@@ -14,18 +14,18 @@ object Day8 {
   def decodeImage(input: Seq[Int], imageSize: Int): List[Int] =
     input.grouped(imageSize).toList.transpose.map(_.find(_ != 2).getOrElse(2))
 
-  def prettyPrint(output: List[Int]): String = {
+  def stringify(output: Seq[Int], width: Int): String = {
     output.map {
       case 0 => "◼️"
       case 1 => "◻️"
       case 2 => " "
-    }.grouped(WIDTH).map(_.mkString("")).mkString("\n")
+    }.grouped(width).map(_.mkString("")).mkString("\n")
   }
 
   def main(args: Array[String]): Unit = {
     val source = Source.fromResource("day8.txt")
     val input = source.getLines().toList.head.map(_.asDigit)
     println(s"part 1 result: ${calculateHash(input, WIDTH * HEIGHT)}")
-    println(s"part 2 result: \n${prettyPrint(decodeImage(input, WIDTH * HEIGHT))}")
+    println(s"part 2 result: \n${stringify(decodeImage(input, WIDTH * HEIGHT), WIDTH)}")
   }
 }
