@@ -16,8 +16,9 @@ class Day12Test extends AnyFunSuite {
     assert(totalEnergy(moons) == 179)
   }
 
-    test("test universe repeating") {
-      def moons = Array(Moon(Array(-8, -10, 0)), Moon(Array(5, 5, 10)), Moon(Array(2, -7, 3)), Moon(Array(9, -8, -3)))
-      assert(stepsBeforeRepeat(moons, moons) == BigInt("4686774924"))
-    }
+  test("test universe repeating") {
+    def moons = Array(Moon(Array(-8, -10, 0)), Moon(Array(5, 5, 10)), Moon(Array(2, -7, 3)), Moon(Array(9, -8, -3)))
+
+    assert(stepsBeforeRepeat(moons, moons) == BigInt("4686774924"))
+  }
 }
