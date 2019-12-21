@@ -25,5 +25,3 @@ lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "s
 libraryDependencies ++= javaFXModules.map( m =>
   "org.openjfx" % s"javafx-$m" % "12.0.2" classifier osName
 )
-
-mainClass in (Compile, run) := Some("day13.Day13")
