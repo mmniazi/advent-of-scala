@@ -36,6 +36,8 @@ object Day14 {
     var fuelsProducedWithWastage = oreLeft / oreForUnitFuel
     var fuel = BigInt(0)
 
+    // For each iteration make a pessimistic guess of what you can produce and then subtract ore for guess
+    // till you reach iteration where no more fuel can be produced from remaining ore
     while (fuelsProducedWithWastage != 0) {
       val oreConsumed = oreRequired(reactions, Seq(Chemical("FUEL", fuelsProducedWithWastage.toInt)), extraChemicals)
       oreLeft -= oreConsumed
