@@ -2,7 +2,7 @@ package day13
 
 import java.util.concurrent.LinkedBlockingQueue
 
-import day5.Day5._
+import common.IntCodeComputer._
 import scalafx.Includes._
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.application.{JFXApp, Platform}

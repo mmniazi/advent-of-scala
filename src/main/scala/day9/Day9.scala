@@ -1,6 +1,6 @@
 package day9
 
-import day5.Day5._
+import common.IntCodeComputer._
 
 object Day9 {
 

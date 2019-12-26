@@ -2,7 +2,7 @@ package day7
 
 import java.util.concurrent.LinkedBlockingQueue
 
-import day5.Day5._
+import common.IntCodeComputer._
 
 import scala.annotation.tailrec
 import scala.collection.parallel.CollectionConverters._

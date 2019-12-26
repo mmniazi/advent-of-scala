@@ -2,7 +2,7 @@ package day15
 
 import java.util.concurrent.{LinkedBlockingQueue, TimeUnit}
 
-import day5.Day5._
+import common.IntCodeComputer._
 
 import scala.annotation.tailrec
 import scala.collection.mutable
@@ -102,7 +102,6 @@ object Day15 {
 
     _buildMap()
   }
-
 
   def printMap(map: mutable.Map[Coord, String]): Unit = {
     val xRange = map.keys.map(_.x).min to map.keys.map(_.x).max

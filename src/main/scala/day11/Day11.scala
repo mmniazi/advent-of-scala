@@ -2,7 +2,7 @@ package day11
 
 import java.util.concurrent.{LinkedBlockingQueue, TimeUnit}
 
-import day5.Day5._
+import common.IntCodeComputer._
 
 import scala.collection.mutable
 
