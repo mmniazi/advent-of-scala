@@ -2,13 +2,19 @@ package day18
 
 import org.scalatest.funsuite.AnyFunSuite
 
+import day18.Day18._
 
 class Day18Test extends AnyFunSuite {
-  test("test") {
-    val input =
-      """#########
-        |#b.A.@.a#
-        |#########""".stripMargin
+  test("findPath") {
+    val inputMap = readMap(
+      """########################
+        |#f.D.E.e.C.b.A.@.a.B.c.#
+        |######################.#
+        |#d.....................#
+        |########################""".stripMargin.split('\n').toList)
 
+    val start = startCoord(inputMap)
+
+    println(findPaths(start, inputMap, start :: Nil))
   }
 }
